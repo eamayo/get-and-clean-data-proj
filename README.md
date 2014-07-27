@@ -28,7 +28,7 @@ The R script accomplishes the above with the steps detailed below:
       }
 ```
 
-* loads activity_labels.txt into a data frame with two variables - `activity_label_code` and  `activity_label_name1. This data frame will be used to map activity labels to human readable format.
+* loads activity_labels.txt into a data frame with two variables - `activity_label_code` and  `activity_label_name`. This data frame will be used to map activity labels to human readable format.
 
 ```R
       label_names <- read.table(
@@ -53,7 +53,7 @@ The R script accomplishes the above with the steps detailed below:
       feature_names <- features[,"feature_name"]
 ```
       
-*  loads the `test/subject_test.txt`, `test/X_test.txt` and 'test/y_test.txt` into R. Descriptive names are passed into the `col.names` parameter of read.table. Repeat for the corresponding training set data files
+*  loads the `test/subject_test.txt`, `test/X_test.txt`, `test/y_test.txt`, `train/subject_train.txt`, `train/X_train.txt` and `train/y_train.txt` data files into R. Descriptive variable names are passed into the `col.names` parameter of read.table.
 
 ```R
       subjects_test <- read.table(
@@ -110,7 +110,7 @@ The R script accomplishes the above with the steps detailed below:
       X_train$subject <- subjects_train$subject
 ```
       
-* Joins the `X_test` and `X_train` data frames from above with the `label_names` data frame using the `activity_label_code` variable as the join key. The joined data frame now has descriptive activity label names. The `activity_label_code` can now be discarded   
+* Joins the `X_test` and `X_train` data frames from above with the `label_names` data frame using the `activity_label_code` variable as the join key. The joined data frames now have descriptive activity label names. The `activity_label_code` variable can now be discarded   
 
 ```R
       test_data <- join(X_test, label_names, by = "activity_label_code")
