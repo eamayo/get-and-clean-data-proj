@@ -48,7 +48,7 @@ numFeatures <- length(feature_names)
 #  * load the test/subject_test.txt, test/X_test.txt and y_test.txt into R (as vector, 
 #    data frame and vector respectively)
 #  * give X_test variables descriptive names using the feature_names vector generated above
-#  * Select only the columns of X_test Extracts corresponding to measurements on the mean 
+#  * Select only the columns of X_test corresponding to measurements on the mean 
 #    and standard deviation for each measurement. 
 #  * augment the resulting X_test data frame with an extra variable called "activity_label_code" 
 #    using the values loaded from y_test.txt
