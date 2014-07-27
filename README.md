@@ -1,7 +1,7 @@
 ### Introduction
 
 In this project we process experimental data collected as part of the "Human Activity Recognition Using Smartphone" experiment conducted at the Non Linear Complex Systems Laboratory of the Universita degli Studi di Genova. The goal of the processing is to prepare tidy data for further analysis.
-During the experiment each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. The experimental data consists of a set of 561 features calculated from the sensor signals (accelerometer and gyroscope) collected from the smartphone at the waist of each of the subjects as the performed each of the six activities.
+During the experiment each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. The experimental data consists of a set of 561 features calculated from the sensor signals (accelerometer and gyroscope) collected from the smartphone at the waist of each of the subjects as they performed each of the six activities.
 
 ### Generating Tidy Data From the Experimental Dataset
 
