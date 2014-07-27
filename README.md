@@ -14,9 +14,9 @@ An R script called run_analysis.R is provided that does the following.
     - Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 
-The R script accomplishes the above as follows:
+The R script accomplishes the above with the steps detailed below:
 
-1. First the data is downloaded from [the link provided on the course page] (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) and unzipped into the working directory
+* First the data is downloaded from [the link provided on the course page] (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) and unzipped into the working directory
 
 ```R
       if (!file.exists("UCI_HAR_Dataset")) {
@@ -28,7 +28,7 @@ The R script accomplishes the above as follows:
       }
 ```
 
-2. loads activity_labels.txt into a data frame with two variables - `activity_label_code` and  `activity_label_name1. This data frame will be used to map activity labels to human readable format.
+* loads activity_labels.txt into a data frame with two variables - `activity_label_code` and  `activity_label_name1. This data frame will be used to map activity labels to human readable format.
 
 ```R
       label_names <- read.table(
@@ -39,7 +39,7 @@ The R script accomplishes the above as follows:
                                 )
 ```                                
                                 
-3. loads features.txt into a data frame. Removes parentheses from the strings in the second column. For example `tBodyAcc-mean()-X` will become `tBodyAcc-mean-X`.  Also variable names of the form `angle(X,Y..)` will get replaced by `angle-X,Y` e.g  `angle(tBodyGyroMean,gravityMean)` will become  `angle-tBodyGyroMean,gravityMean`. This transformed column will be used to label the train and test data sets with descriptive variable names. Note that when passed to the `col.names` argument of `read.table()` the `-` and `,` in the descriptive names will get converted to `.`. So for example the variable name `angle-tBodyGyroMean,gravityMean` will become `angle.tBodyGyroMean.gravityMean`.
+* loads features.txt into a data frame. Removes parentheses from the strings in the second column. For example `tBodyAcc-mean()-X` will become `tBodyAcc-mean-X`.  Also variable names of the form `angle(X,Y..)` will get replaced by `angle-X,Y` e.g  `angle(tBodyGyroMean,gravityMean)` will become  `angle-tBodyGyroMean,gravityMean`. This transformed column will be used to label the train and test data sets with descriptive variable names. Note that when passed to the `col.names` argument of `read.table()` the `-` and `,` in the descriptive names will get converted to `.`. So for example the variable name `angle-tBodyGyroMean,gravityMean` will become `angle.tBodyGyroMean.gravityMean`.
 
 ```R
       features <- read.table(
@@ -53,7 +53,7 @@ The R script accomplishes the above as follows:
       feature_names <- features[,"feature_name"]
 ```
       
-4.  loads the `test/subject_test.txt`, `test/X_test.txt` and 'test/y_test.txt` into R. Descriptive names are passed into the `col.names` parameter of read.table. Repeat for the corresponding training set data files
+*  loads the `test/subject_test.txt`, `test/X_test.txt` and 'test/y_test.txt` into R. Descriptive names are passed into the `col.names` parameter of read.table. Repeat for the corresponding training set data files
 
 ```R
       subjects_test <- read.table(
@@ -94,14 +94,14 @@ The R script accomplishes the above as follows:
                           )                    
 ```
 
-5. Selects only the columns of `X_test` and `X_train` corresponding to measurements on the mean and standard deviation for each measurement.
+* Selects only the columns of `X_test` and `X_train` corresponding to measurements on the mean and standard deviation for each measurement.
 
 ```R
       X_test <- X_test[, grepl("mean|std", names(X_test))]
       X_train <- X_train[, grepl("mean|std", names(X_train))]
 ```
       
-6. Augments the resulting `X_test` and `X_train` data frames with an extra variable called `activity_label_code` using the values loaded from y_test.txt and y_train.txt.  Also augments  `X_test` and `X_train` with an extra variable called `subject` (from the data loaded from subject_test.txt) indicating which subject the measurements in each record were taken from
+* Augments the resulting `X_test` and `X_train` data frames with an extra variable called `activity_label_code` using the values loaded from y_test.txt and y_train.txt.  Also augments  `X_test` and `X_train` with an extra variable called `subject` (from the data loaded from subject_test.txt) indicating which subject the measurements in each record were taken from
 
 ```R
       X_test$activity_label_code <- y_test$activity_label_code
@@ -110,7 +110,7 @@ The R script accomplishes the above as follows:
       X_train$subject <- subjects_train$subject
 ```
       
-7. Joins the `X_test` and `X_train` data frames from above with the `label_names` data frame using the `activity_label_code` variable as the join key. The joined data frame now has descriptive activity label names. The `activity_label_code` can now be discarded   
+* Joins the `X_test` and `X_train` data frames from above with the `label_names` data frame using the `activity_label_code` variable as the join key. The joined data frame now has descriptive activity label names. The `activity_label_code` can now be discarded   
 
 ```R
       test_data <- join(X_test, label_names, by = "activity_label_code")
@@ -119,19 +119,19 @@ The R script accomplishes the above as follows:
       train_data <- train_data[, !grepl("activity_label_code", names(train_data))]
 ```      
       
-8. Combines the test and train data frames into a single data frame `all_data`
+* Combines the test and train data frames into a single data frame `all_data`
 
 ```R
       all_data <- rbind(train_data, test_data)
 ```
 
-9. Generates a new data frame with the average of each variable for each combination of subject and activity 
+* Generates a new data frame with the average of each variable for each combination of subject and activity 
 
 ```R
       tidy_UCI_HAR_dataset <- ddply(all_data, .(subject, activity_label_name), numcolwise(mean))
 ```
 
-10. Finally the tidy data set is written to disk as a tab-separated text file called `tidy_UCI_HAR_dataset.tsv` 
+* Finally the tidy data set is written to disk as a tab-separated text file called `tidy_UCI_HAR_dataset.tsv` 
 
 ```R
       write.table(tidy_UCI_HAR_dataset, file = "tidy_UCI_HAR_dataset.tsv", sep = "\t", row.names = FALSE)
